@@ -1,3 +1,140 @@
+# v1.5.0 - Heat 1.5 Release: distributed matrix factorization and more
+
+# Heat 1.5 Release Notes
+--------------------------
+
+- [Overview](#overview)
+- [Highlights](#highlights)
+- [Performance Improvements](#performance-improvements)
+- [Sparse](#sparse)
+- [Signal Processing](#signal-processing)
+- [RNG](#rng)
+- [Statistics](#statistics)
+- [Manipulations](#manipulations)
+- [I/O](#io)
+- [Machine Learning](#machine-learning)
+- [Deep Learning](#deep-learning)
+- [Other Updates](#other-updates)
+- [Contributors](#contributors)
+
+
+## Overview
+
+With Heat 1.5 we release the first set of features developed within the [ESAPCA](https://activities.esa.int/index.php/4000144045) project co-funded by the European Space Agency (ESA). 
+
+The main focus of this release is on distributed linear algebra operations, such as  tall-skinny SVD,  batch matrix multiplication, and triangular solver. We also introduce vectorization via `vmap` across MPI processes, and batch-parallel random number generation as default for distributed operations.
+
+This release also includes a new class for distributed Compressed Sparse Column matrices, paving the way for future implementation of distributed sparse matrix multiplication. 
+
+On the performance side, our new array redistribution via MPI Custom Datatypes provides significant speed-up in operations that require it, such as FFTs.
+
+We are grateful to our community of users, students, open-source contributors, the European Space Agency and the Helmholtz Association for their support and feedback.
+
+
+## Highlights
+
+- [ESAPCA] Distributed tall-skinny SVD: `ht.linalg.svd` (by @mrfh92)
+- Distributed batch matrix multiplication: `ht.linalg.matmul` (by @FOsterfeld)
+- Distributed solver for triangular systems: `ht.linalg.solve_triangular` (by @FOsterfeld)
+- Vectorization across MPI processes: `ht.vmap` (by @mrfh92)
+
+
+## Other Changes
+
+### Performance Improvements
+
+- [#1493](https://github.com/helmholtz-analytics/heat/pull/1493) Redistribution speed-up via MPI Custom Datatypes available by default in `ht.resplit` (by @JuanPedroGHM)
+
+### Sparse
+
+- [#1377](https://github.com/helmholtz-analytics/heat/pull/1377) New class: Distributed Compressed Sparse Column Matrix `ht.sparse.DCSC_matrix()` (by @Mystic-Slice)
+
+### Signal Processing
+- [#1515](https://github.com/helmholtz-analytics/heat/pull/1515) Support batch 1-d convolution in `ht.signal.convolve`  (by @ClaudiaComito)
+
+### RNG
+- [#1508](https://github.com/helmholtz-analytics/heat/pull/1508) Introduce batch-parallel RNG as default for distributed operations (by @mrfh92)
+
+
+### Statistics
+- [#1420](https://github.com/helmholtz-analytics/heat/pull/1420)
+ Support sketched percentile/median for large datasets with `ht.percentile(sketched=True)` (and `ht.median`) (by @mrhf92)
+- [#1510](https://github.com/helmholtz-analytics/heat/pull/1510) Support multiple axes for distributed `ht.percentile` and `ht.median` (by @ClaudiaComito)
+
+### Manipulations
+- [#1419](https://github.com/helmholtz-analytics/heat/pull/1419) Implement distributed `unfold` operation (by @FOsterfeld)
+
+### I/O
+- [#1602](https://github.com/helmholtz-analytics/heat/pull/1602) Improve load balancing when loading .npy files from path (by @Reisii)
+- [#1551](https://github.com/helmholtz-analytics/heat/pull/1551) Improve load balancing when loading .csv files from path (by @Reisii)
+
+### Machine Learning
+- [#1593](https://github.com/helmholtz-analytics/heat/pull/1593) Improved batch-parallel clustering `ht.cluster.BatchParallelKMeans` and `ht.cluster.BatchParallelKMedians` (by @mrfh92)
+
+### Deep Learning
+- [#1529](https://github.com/helmholtz-analytics/heat/pull/1529) Make `dataset.ishuffle` optional. (by @krajsek) 
+
+### Other Updates
+
+- [#1618](https://github.com/helmholtz-analytics/heat/pull/1618) Support mpi4py 4.x.x (by @JuanPedroGHM)
+
+
+## Contributors
+
+@mrfh92, @FOsterfeld, @JuanPedroGHM, @Mystic-Slice, @ClaudiaComito, @Reisii,  @mtar and @krajsek 
+
+# v1.5.0
+
+## Changes
+
+### Cluster
+
+- #1593 Improved Batch Parallelization. (by @mrfh92)
+
+### Data
+
+- #1529 Make `dataset.ishuffle` optional.
+
+### IO
+
+- #1602 Improved load balancing when loading .npy files from path. (by @Reisii)
+- #1551 Improved load balancing when loading .csv files from path.  (by @Reisii)
+
+### Linear Algebra
+
+- #1261 Batched matrix multiplication. (by @FOsterfeld)
+- #1504 Add solver for triangular systems. (by @FOsterfeld)
+
+### Manipulations
+
+- #1419 Implement distributed `unfold` operation. (by @FOsterfeld)
+
+### Random
+
+- #1508 Introduce Batchparallel for RNG as default. (by @mrfh92)
+
+### Signal
+
+- #1515 Support batch 1-d convolution in `ht.signal.convolve`.  (by @ClaudiaComito)
+
+### Statistics
+
+- #1510 Support multiple axes for `ht.percentile`. (by @ClaudiaComito)
+
+### Sparse
+
+- #1377 Distributed Compressed Sparse Column Matrix. (by @Mystic-Slice)
+
+### Other
+
+- #1618 Support mpi4py 4.x.x (by @JuanPedroGHM)
+
+
+## Contributors
+
+@ClaudiaComito, @FOsterfeld, @JuanPedroGHM, @Reisii, @mrfh92, @mtar and Hoppe
+
+
 # v1.4.2 - Maintenance release
 
 ## Changes
